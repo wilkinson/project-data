@@ -4,7 +4,48 @@
 	<link rel="stylesheet" type="text/css" href="index.css" />
 </head>
 <body>
-Experimenting with using Q machine for analysis of multiple viral genomes: http://q.cgr.googlecode.com/hg/index.html, see <a href="#">YouTube</a> for a webcast.
+<p>Experimenting with using Q machine for analysis of multiple Prokariote genomes: http://q.cgr.googlecode.com/hg/index.html, see <a href="#">YouTube</a> for a webcast.</p>
+<p>In this experiment we'll look for the longest similar segment in the 14 <i>Streptococcus pneumoniae</i> strains for which the full genome is available at NCBI's FTP site as of April 30, 2012.</p>
+<p>The first step is to make Qmachine's js library available, see in the head of this document:<p>
+<pre>
+<script src="http://qmachine.org/main.js"></script>
+</pre>
+<p>It could also have been imported programmatically by:</p>
+<pre>
+s=document.createElement('script');
+s.src='http://qmachine.org/main.js';
+document.body.appendChild(s);
+</pre>
+<p> In this illustration we'll distribute the mapReduce decomposition of sequence alignment described in (Almeida 2012), <a href="http://usm.github.com">http://usm.github.com</a>. In that report, the genome of one of those strains, R6, is probed for the longest similar segment to "TCCACAGCATGCGTGACGATGACACG"<p> 	
+<pre>
+uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococcus_pneumoniae_R6_uid57859/NC_003098.fna')
+A = uBac.align('TCCACAGCATGCGTGACGATGACACG')
+</pre>
+<p> and 3 different segments of 10 units each are found. Here, the 14 genomes, each ~2M bp long, are made also available as javascript function calls at <a href="http://q.cgr.googlecode.com/hg/Pneumo" target=_blank>http://q.cgr.googlecode.com/hg/Pneumo</a>. Using the R6 strain as an example, the <a href="http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js">fasta() call</a> looks like this:
+<pre>
+fasta({name:"NC_003098.fna",
+head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
+body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTTCTA...TGCTATCTATGGTAAAATATCTCTAGT"})
+</pre>
+<p>The function <a href="fasta.js">fasta()</a> will now be defined such that it can be distributed by Q to other machines where this sequence matching can be made, in parallel, for each of the 14 genomes, and the result shipped back to Q:<p>
+
+<pre>
+fasta=function(x){
+	// Get the USM library if it is not there already
+	if(typeof(usm)=='undefined'){
+		var s=document.createElement('script');
+		s.src='http://usm.github.com/usm.js';
+		document.body.appendChild(s);
+		s.onload=fasta(x);
+	}
+	else{
+		var uBac = new usm(x.body);
+		fasta.A = uBac.align('TCCACAGCATGCGTGACGATGACACG'); // store result in fasta.A
+		// Sean, I am guessing in this position you want to have something returning fasta.A to the Q
+	}
+}
+</pre>
+
 
 </body>
 </html>
