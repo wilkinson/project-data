@@ -3,7 +3,7 @@ fasta=function(x){
 	// Get the USM library and its dependencies if it is not there already
 	if(typeof(usm)=='undefined'){
 		//fasta.load(['http://localhost:8888/jmat/jmat.js','http://localhost:8888/usm/usm.js'],fasta)
-		fasta.load(['http://jmat.googlecode.com/git/jmat.js'],['http://usm.github.com/usm.js'])
+		fasta.load(['http://jmat.googlecode.com/git/jmat.js'],['http://usm.github.com/usm.js'],fasta)
 		}
 	else{
 		console.log('Indexing genome ...')
