@@ -1,7 +1,9 @@
 <html>
 <head>
 	<script src="http://qmachine.org/main.js"></script>
+	<script src="fasta.js"></script>
 	<link rel="stylesheet" type="text/css" href="index.css" />
+	
 </head>
 <body>
 <p>Experimenting with using Q machine for analysis of multiple Prokariote genomes: http://q.cgr.googlecode.com/hg/index.html, see <a href="#">YouTube</a> for a webcast.</p>
@@ -30,21 +32,81 @@ body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTT
 <p>The function <a href="fasta.js">fasta()</a> will now be defined such that it can be distributed by Q to other machines where this sequence matching can be made, in parallel, for each of the 14 genomes, and the result shipped back to Q:<p>
 
 <pre>
-fasta=function(x){
-	// Get the USM library if it is not there already
-	if(typeof(usm)=='undefined'){
-		var s=document.createElement('script');
-		s.src='http://usm.github.com/usm.js';
-		document.body.appendChild(s);
-		s.onload=fasta(x);
+	fasta=function(x){
+		if(!!x){fasta.seq=x}; // store sequence in fasta() 
+		// Get the USM library and its dependencies if it is not there already
+		if(typeof(usm)=='undefined'){
+			//fasta.load(['http://localhost:8888/jmat/jmat.js','http://localhost:8888/usm/usm.js'],fasta)
+			fasta.load(['jmat.googlecode.com/git/jmat.js'],['http://usm.github.com/usm.js'])
+			}
+		else{
+			console.log('Indexing genome ...')
+			//var uBac = new usm(x.body); // for small genomes this would be enough
+			var uBac = new usm();
+			uBac.encodeLong(fasta.seq.body,'ACGT');
+			console.log('Aligning new sequence to indexed genome...')
+			fasta.A = uBac.align('TCCACAGCATGCGTGACGATGACACG'); // store result in fasta.A
+			console.log('done !');
+			// Sean, I am guessing in this position you want to have something returning fasta.A to the Q
+		}
 	}
-	else{
-		var uBac = new usm(x.body);
-		fasta.A = uBac.align('TCCACAGCATGCGTGACGATGACACG'); // store result in fasta.A
-		// Sean, I am guessing in this position you want to have something returning fasta.A to the Q
+
+	fasta.load=function(url,callback){ // to load fasta call from remote location
+		if(typeof(url)=='string'){url=[url,'']} // to make sure it's an array of strings, there may be more than one
+		else if(url[url.length-1]!==''){url.push('')} // making sure trailing '' is there, it will be used to close iteration
+		if(url[0].length>0){
+			console.log('loading '+url[0]+' ...');
+			var s=document.createElement('script');
+			s.src=url[0];
+			s.onload=function(){
+				fasta.load(url.slice(1),callback)
+				}
+			document.body.appendChild(s);	
+		}
+		else if(!!callback){callback()}
 	}
-}
 </pre>
+<p>For convenience, this function was also loaded in the header of this document, so we are ready to use it. The fasta function includes a method that will help us load the pneumococcal genomes and trigger the main function, fasta(), to align the test segment to it. For example, for the R6 strain we could do this by</p>
+<pre>
+fasta.load('./Pneumo/NC_003098.fna.js')	
+</pre>
+This will take a few seconds, wait for the console to display "done!". The final result is stored in fasta.A, witch contains the position or positions of the longest shared segments and  will be something like,
+<pre>
+	fasta.A
+	Object
+	ind: 1
+	match: Array[4]
+	0: 0
+	1: 10
+	2: 10
+	3: 10
+	length: 4
+	__proto__: Array[0]
+	posBase: Array[4]
+	0: 0
+	1: 1811967
+	2: 1895547
+	3: 1992091
+	length: 4
+	__proto__: Array[0]
+	posProbe: Array[4]
+	0: 0
+	1: 5
+	2: 0
+	3: 14
+	length: 4
+	__proto__: Array[0]
+	__proto__: Object
+</pre>
+<p>As detailed in the USM paper, the longest shared segment has length 10 and 10 differnt segments of that length were found in R6's genome. Now for the grand finale lets distribute the 15 pneumococcal genomes to volunteer machines using Q to find out what would be the alignmnet result for each of them. As detailed in the Qmachine manuscript this will distribute both computation and use of bandwidth:</p>
+<pre>
+Your turn Sean, pls make it as simple as possible, note we only need to retrieve the fasta.A results from each alignment.
+</pre>
+
+
+
+
+
 
 
 </body>
