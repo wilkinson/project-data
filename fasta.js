@@ -9,12 +9,13 @@ fasta=function(x){
 		console.log('Indexing genome ...')
 		//var uBac = new usm(x.body); // for small genomes this would be enough
 		var uBac = new usm();
-		uBac.encodeLong(fasta.seq.body,'ACGT');
+		uBac.encodeLong(fasta.seq.body);
 		console.log('Aligning new sequence to indexed genome...')
 		fasta.A = uBac.align('TCCACAGCATGCGTGACGATGACACG'); // store result in fasta.A
 		console.log('done !');
 		// Sean, I am guessing in this position you want to have something returning fasta.A to the Q
 	}
+	return 'fasta() call initiated'
 }
 
 fasta.load=function(url,callback){ // to load fasta call from remote location
@@ -30,4 +31,5 @@ fasta.load=function(url,callback){ // to load fasta call from remote location
 		document.body.appendChild(s);	
 	}
 	else if(!!callback){callback()}
+	return 'fasta.load call completed'
 }

@@ -68,7 +68,7 @@ body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTT
 </pre>
 <p>For convenience, this function was also loaded in the header of this document, so we are ready to use it. The fasta function includes a method that will help us load the pneumococcal genomes and trigger the main function, fasta(), to align the test segment to it. For example, for the R6 strain we could do this by</p>
 <pre>
-fasta.load('./Pneumo/NC_003098.fna.js')	
+fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js')
 </pre>
 This will take a few seconds, wait for the console to display "done!". The final result is stored in fasta.A, witch contains the position or positions of the longest shared segments and  will be something like,
 <pre>
