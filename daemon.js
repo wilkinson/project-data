@@ -42,8 +42,6 @@
         };
         x.onready = function (evt) {
          // This function needs documentation.
-            var url = 'http://qmachine.org/box/' + x.box + '?key=' + x.key;
-            console.log('Done: ' + url);
             global.setTimeout(revive, 1000);
             return evt.exit();
         };
