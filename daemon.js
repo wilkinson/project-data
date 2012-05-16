@@ -34,13 +34,16 @@
         var x = Q.volunteer();
         x.onerror = function (message) {
          // This function needs documentation.
-            console.error(message);
+            if (message !== 'Nothing to do ...') {
+                console.error(message);
+            }
             global.setTimeout(revive, 1000);
             return;
         };
         x.onready = function (evt) {
          // This function needs documentation.
-            console.log('(pulse)');
+            var url = 'http://qmachine.org/box/' + x.box + '?key=' + x.key;
+            console.log('Done: ' + url);
             global.setTimeout(revive, 1000);
             return evt.exit();
         };
