@@ -16,7 +16,7 @@
         throw new Error('Method Q is missing.');
     }
 
-    if (global.hasOwnProperty('setTimeout') === false) {
+    if (typeof global.setTimeout !== 'function') {
         return;
     }
 
