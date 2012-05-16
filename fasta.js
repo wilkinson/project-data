@@ -1,35 +1,111 @@
-fasta=function(x){
-	if(!!x){fasta.seq=x}; // store sequence in fasta() 
-	// Get the USM library and its dependencies if it is not there already
-	if(typeof(usm)=='undefined'){
-		//fasta.load(['http://localhost:8888/jmat/jmat.js','http://localhost:8888/usm/usm.js'],fasta)
-		fasta.load(['http://jmat.googlecode.com/git/jmat.js','http://usm.github.com/usm.js'],fasta)
-		}
-	else{
-		console.log('Indexing genome ...')
-		//var uBac = new usm(x.body); // for small genomes this would be enough
-		var uBac = new usm();
-		uBac.encodeLong(fasta.seq.body);
-		console.log('Aligning new sequence to indexed genome...')
-		fasta.A = uBac.align('TCCACAGCATGCGTGACGATGACACG'); // store result in fasta.A
-		console.log('done !');
-		// Sean, I am guessing in this position you want to have something returning fasta.A to the Q
-	}
-	return 'fasta() call initiated'
-}
+//- JavaScript source code
 
-fasta.load=function(url,callback){ // to load fasta call from remote location
-	if(typeof(url)=='string'){url=[url,'']} // to make sure it's an array of strings, there may be more than one
-	else if(url[url.length-1]!==''){url.push('')} // making sure trailing '' is there, it will be used to close iteration
-	if(url[0].length>0){
-		console.log('loading '+url[0]+' ...');
-		var s=document.createElement('script');
-		s.src=url[0];
-		s.onload=function(){
-			fasta.load(url.slice(1),callback)
-			}
-		document.body.appendChild(s);	
-	}
-	else if(!!callback){callback()}
-	return 'fasta.load call completed'
-}
+//- fasta.js ~~
+//                                                      ~~ (c) SRW, 15 May 2012
+
+(function () {
+    'use strict';
+
+ // Pragmas
+
+    /*jslint indent: 4, maxlen: 80 */
+
+ // Prerequisites
+
+    if (Object.prototype.hasOwnProperty('Q') === false) {
+        throw new Error('Method Q is missing.');
+    }
+
+ // Declarations
+
+    var Q, avar;
+
+ // Definitions
+
+    Q = Object.prototype.Q;
+
+    avar = Q.avar;
+
+ // Out-of-scope definitions
+
+    Q.fasta = function (url) {
+     // This function needs documentation.
+        var y = avar({val: {input: url, output: undefined}});
+        y.onready = function (evt) {
+         // This function will run remotely :-)
+            /*global jmat: false, usm: false */
+            var y, Q, avar, data, libs, results, when;
+            y = this;
+            Q = Object.prototype.Q;
+            avar = Q.avar;
+            data = Q.retrieve(function (val) {
+             // This function needs documentation.
+                var name = y.val.input.match(/NC_[0-9]{6}\.fna/)[0];
+                return ((val !== null)                  &&
+                        (val !== undefined)             &&
+                        (val.hasOwnProperty('name'))    &&
+                        (val.name === name));
+            });
+            libs = avar({
+                val: [
+                    'http://jmat.googlecode.com/git/jmat.js',
+                    'http://usm.github.com/usm.js',
+                    y.val.input
+                ]
+            });
+            results = avar();
+            when = Q.when;
+            data.onerror = libs.onerror = results.onerror = function (msg) {
+             // This function needs documentation.
+                return evt.fail(msg);
+            };
+            libs.onready = function (evt) {
+             // This function shows how to load external dependencies in a
+             // sequential manner, which is really important when resources
+             // are not necessarily designed for use with Q Machine.
+                var temp;
+                if (libs.length > 0) {
+                    temp = Q.lib(libs.shift());
+                    temp.onerror = function (message) {
+                     // This function needs documentation.
+                        return evt.fail(message);
+                    };
+                    temp.onready = function (temp_evt) {
+                     // This function needs documentation.
+                        temp_evt.exit();
+                        return evt.stay('Loading next external resource ...');
+                    };
+                    return;
+                }
+                return evt.exit();
+            };
+            when(data, libs, results).areready = function (evt) {
+             // This function needs documentation.
+                /*jslint newcap: true */
+                var uBac = new usm();
+                jmat.disp('Indexing genome ...');
+                uBac.encodeLong(data.val.body, 'ACGT');
+                jmat.disp('Aligning new sequence to indexed genome ...');
+                results.val = uBac.align('TCCACAGCATGCGTGACGATGACACG');
+                jmat.disp('Done!');
+                return evt.exit();
+            };
+            results.onready = function (result_evt) {
+             // This function copies the final results into `y` so they can
+             // be returned to the invoking machine :-)
+                y.val.output = results.val;
+                result_evt.exit();
+                return evt.exit();
+            };
+            return;
+        };
+        return y;
+    };
+
+ // That's all, folks!
+
+    return;
+
+}());
+
+//- vim:set syntax=javascript:

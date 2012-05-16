@@ -25,7 +25,10 @@ for i=1:length(d)
     disp([num2str(i),'/',num2str(length(d)),' ',DIR0,d(i).name]);
     fidR = fopen([DIR0,d(i).name],'r');
     fidW = fopen([DIR0,d(i).name,'.js'],'w');
-    fprintf(fidW,'%s\n',['fasta({name:"',d(i).name,'",']);
+  % NOTE: I edited the callback function to reflect the new JavaScript code
+  % so that all steps can be completely reproduced as needed.
+  %                                                         ~~ SRW, 15 May 2012
+    fprintf(fidW,'%s\n',['Q.capture({name:"',d(i).name,'",']);
     dt.head=fgetl(fidR);
     fprintf(fidW,'%s\n',['head:"',dt.head,'",']);
     fprintf(fidW,'%s','body:"');

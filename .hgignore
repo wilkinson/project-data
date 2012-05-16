@@ -1,0 +1,29 @@
+#-  Mercurial "ignore" file
+
+#-  .hgignore ~~
+#
+#   This file contains a set of patterns that alter the behavior of Mercurial.
+#   Mercurial will ignore every unmanaged file that matches any pattern in an
+#   "ignore" file.
+#
+#                                                           ~~ SRW, 05 Aug 2010
+
+# First, we ignore all temporary files created by vim.
+\.swp$
+
+# Git repository "database" (if present)
+.git/
+
+# Mac OS X
+^\.localized$
+^\.DS_Store$
+
+# Stupid garbage files that the 'd8' and 'v8' shells leave everywhere...
+\.d8_history$
+\.v8_history$
+
+# XCode nonsense
+\.pbxuser$
+\.mode1v3$
+
+#-  vim:set syntax=python:
