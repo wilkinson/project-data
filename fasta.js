@@ -64,8 +64,8 @@
              // sequential manner, which is really important when resources
              // are not necessarily designed for use with Q Machine.
                 var temp;
-                if (libs.length > 0) {
-                    temp = Q.lib(libs.shift());
+                if (libs.val.length > 0) {
+                    temp = Q.lib(libs.val.shift());
                     temp.onerror = function (message) {
                      // This function needs documentation.
                         return evt.fail(message);
