@@ -49,6 +49,7 @@
 
     when(data, libs).areready = function (evt) {
      // This function needs documentation.
+        Q.box = 'fasta-demo';
         data.forEach(function (url) {
          // This function needs documentation.
             console.log('Launching ' + url + ' ...');
