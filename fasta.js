@@ -3,7 +3,7 @@
 //- fasta.js ~~
 //                                                      ~~ (c) SRW, 15 May 2012
 
-(function () {
+(function (global) {
     'use strict';
 
  // Pragmas
@@ -28,6 +28,8 @@
 
  // Out-of-scope definitions
 
+    global.fasta = Q.capture;
+
     Q.fasta = function (url) {
      // This function needs documentation.
         var y = avar({val: {input: url, output: undefined}});
@@ -50,6 +52,7 @@
                 val: [
                     'http://jmat.googlecode.com/git/jmat.js',
                     'http://usm.github.com/usm.js',
+                    'http://q.cgr.googlecode.com/hg/fasta.js',
                     y.val.input
                 ]
             });
@@ -106,6 +109,15 @@
 
     return;
 
-}());
+}(Function.prototype.call.call(function (that) {
+    'use strict';
+ // See the bottom of "quanah.js" for documentation.
+    /*jslint indent: 4, maxlen: 80 */
+    /*global global: true */
+    if (this === null) {
+        return (typeof global === 'object') ? global : that;
+    }
+    return (typeof this.global === 'object') ? this.global : this;
+}, null, this)));
 
 //- vim:set syntax=javascript:
