@@ -40,6 +40,7 @@
         };
         x.onready = function (evt) {
          // This function needs documentation.
+            console.log('(pulse)');
             global.setTimeout(revive, 1000);
             return evt.exit();
         };
