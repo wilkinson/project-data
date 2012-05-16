@@ -32,7 +32,7 @@
      // This function needs documentation.
         var y = avar({val: {input: url, output: undefined}});
         y.onready = function (evt) {
-         // This function will run remotely :-)
+         // This function (should) run remotely ...
             /*global jmat: false, usm: false */
             var y, Q, avar, data, libs, results, when;
             y = this;
