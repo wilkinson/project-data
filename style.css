@@ -1,0 +1,19 @@
+/*  CSS stylesheet */
+
+/*  style.css ~~
+ *                                                      ~~ (c) SRW, 19 May 2012
+ */
+
+body {
+
+    font-family: "Verdana";
+
+}
+
+pre {
+
+    color: navy;
+
+}
+
+/*  vim:set syntax=css: */
