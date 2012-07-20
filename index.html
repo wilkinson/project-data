@@ -43,7 +43,7 @@
       &lt;script src="http://qmachine.org/q.js"&gt;&lt;/script&gt;
     </div>
     <div>
-      It could also have been imported programmatically by:
+      It could also have been imported programmatically:
     </div>
     <div class="inline-code">
       s = document.createElement('script');
@@ -63,18 +63,18 @@
     </div>
     <div>
       and three different segments of ten units each are found. Here, the
-      fourteen genomes, each approximately two million base-pairs in length,
-      are also made available as JavaScript function calls at
-      <a href="Pneumo" target=_blank>http://q.cgr.googlecode.com/hg/Pneumo</a>.
-      Using the R6 strain as an example, the
+      fourteen genomes, each approximately two million base pairs long, are
+      also made available as JavaScript function calls at
+      <a href="Pneumo">http://q.cgr.googlecode.com/hg/Pneumo</a>. An
+      abbreviated form of the
       <a href="Pneumo/NC_003098.fna.js">
-        <span class="inline-code">fasta</span> call</a> looks like this:
+        <span class="inline-code">fasta</span> call for R6</a> follows:
     </div>
     <div class="inline-code">
       fasta({
           name:"NC_003098.fna",
           head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
-          body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTTCTA...TGCTATCTATGGTAAAATATCTCTAGT"
+          body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAA...TATTAAACTTTTAAATAGTAAAGGAGGAGAAAGGA"
       });
     </div>
     <div>
@@ -101,7 +101,7 @@
       <span class="inline-code">fasta</span> function includes a method that
       will help us load the pneumococcal genomes and trigger the main function,
       <span class="inline-code">fasta()</span>, to align the test segment to
-      it. For example, for the R6 strain we could do this by
+      it. For example, for the R6 strain we can use this invocation:
     </div>
     <div class="inline-code">
       fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
@@ -144,8 +144,8 @@
       As detailed in the USM paper, the longest shared segment has length 10,
       and 10 different segments of that length were found in R6's genome. Now,
       for the grand finale, let's compute the the alignment results for each
-      of the 14 pneumococcal genomes simultaneously by distributing individual
-      tasks to volunteer web browsers using QM. As detailed in the QM
+      of the 14 pneumococcal genomes simultaneously by using QM to distribute
+      individual tasks to volunteer web browsers. As detailed in the QM
       manuscript, this strategy not only distributes the computational load,
       but it also distributes the bandwidth requirements, too.
     </div>
