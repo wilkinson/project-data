@@ -8,10 +8,10 @@
  // This function needs documentation.
     /*jslint browser: true, indent: 4, maxlen: 80 */
     var i, n, temp, x;
-    x = document.getElementsByTagName('pre');
+    x = document.getElementsByClassName('inline-code');
     n = x.length;
     for (i = 0; i < n; i += 1) {
-        if (x[i].innerHTML[0] === ' ') {
+        if (x[i].tagName.toLowerCase() === 'div') {
             temp = '    ' + x[i].innerHTML.trim().split('\n  ').join('\n');
             x[i].innerHTML = temp;
         }

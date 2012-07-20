@@ -2,11 +2,13 @@
     index.html ~~
                                                     ~~ (c) JSA and SRW, 2012
 -->
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8"/>
+    <title>CGR Demo for QMachine</title>
+    <link rel="stylesheet" href="./style.css"/>
     <script src="http://qmachine.org/q.js"></script>
-    <script src="fasta.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="./fasta.js"></script>
   </head>
   <body>
     <noscript>This page requires JavaScript.</noscript>
@@ -25,17 +27,17 @@
       The first step is to make QMachine's JavaScript library available, as
       shown in the head of this document:
     </div>
-    <pre>
-&lt;script src="http://qmachine.org/q.js"&gt;&lt;/script&gt;
-    </pre>
+    <div class="inline-code">
+      &lt;script src="http://qmachine.org/q.js"&gt;&lt;/script&gt;
+    </div>
     <div>
       It could also have been imported programmatically by:
     </div>
-    <pre>
+    <div class="inline-code">
       s = document.createElement('script');
       s.src = 'http://qmachine.org/q.js';
       document.body.appendChild(s);
-    </pre>
+    </div>
     <div>
       In this illustration we will distribute the mapReduce decomposition of
       sequence alignment described in (Almeida 2012),
@@ -43,10 +45,10 @@
       report, the genome of one of those strains, R6, is probed for the longest
       similar segment to "TCCACAGCATGCGTGACGATGACACG"
     </div>
-    <pre>
+    <div class="inline-code">
       uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococcus_pneumoniae_R6_uid57859/NC_003098.fna');
       A = uBac.align('TCCACAGCATGCGTGACGATGACACG');
-    </pre>
+    </div>
     <div>
       and three different segments of ten units each are found. Here, the
       fourteen genomes, each approximately two million base-pairs in length,
@@ -55,21 +57,21 @@
       Using the R6 strain as an example, the
       <a href="Pneumo/NC_003098.fna.js">fasta() call</a> looks like this:
     </div>
-    <pre>
+    <div class="inline-code">
       fasta({
           name:"NC_003098.fna",
           head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
           body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTTCTA...TGCTATCTATGGTAAAATATCTCTAGT"
       });
-    </pre>
-    <div>
-      The function <a href="fasta.js">fasta()</a> will now be defined such that
-      the computation may be distributed by QM for execution by other web
-      browsers in parallel where this sequence matching will be made for each
-      of the fourteen genomes and the results returned back to the invoking
-      machine:
     </div>
-    <pre>
+    <div>
+      The function <a class="inline-code" href="fasta.js">fasta()</a> will now
+      be defined such that the computation may be distributed by QM for
+      execution by other web browsers in parallel where this sequence matching
+      will be made for each of the fourteen genomes and the results returned
+      back to the invoking machine:
+    </div>
+    <div class="inline-code">
       fasta = function (x) {
        // This function will be pasted in here as soon as I can figure out
        // what Jonas's original intent here was ...
@@ -77,25 +79,27 @@
           // ...
           return y;
       };
-    </pre>
+    </div>
     <div>
       For convenience, this function was also loaded in the header of this
-      document, so we are already ready to use it. The <pre>fasta</pre>
-      function includes a method that will help us load the pneumococcal
-      genomes and trigger the main function, <pre>fasta()</pre>, to align the
-      test segment to it. For example, for the R6 strain we could do this by
+      document, so we are already ready to use it. The
+      <span class="inline-code">fasta</span> function includes a method that
+      will help us load the pneumococcal genomes and trigger the main function,
+      <span class="inline-code">fasta()</span>, to align the test segment to
+      it. For example, for the R6 strain we could do this by
     </div>
-    <pre>
+    <div class="inline-code">
       fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
-    </pre>
+    </div>
     <div>
       This will take a few seconds -- just wait for the console to display
-      "done!". The final result is stored in <pre>fasta.A</pre>, which contains
+      "done!". The final result is stored in
+      <span class="inline-code">fasta.A</span>, which contains
       the position or positions of the longest shared segments and will look
       something like
     </div>
-    <pre>
-	fasta.A
+    <div class="inline-code">
+      fasta.A
 	Object
 	ind: 1
 	match: Array[4]
@@ -120,7 +124,7 @@
 	length: 4
 	__proto__: Array[0]
 	__proto__: Object
-    </pre>
+    </div>
     <div>
       As detailed in the USM paper, the longest shared segment has length 10
       and 10 different segments of that length were found in R6's genome. Now,
@@ -129,15 +133,13 @@
       would be for each one of them. As detailed in the QM manuscript, this
       will distribute both the computational resources and the bandwidth:
     </div>
-    <pre>
+    <div class="inline-code">
       (placeholder)
-    </pre>
+    </div>
     <div>
       <a href="user.html">User Page</a>
       <a href="volunteer.html">Volunteer Page</a>
     </div>
-  <!--
     <script src="markup.js"></script>
-  -->
   </body>
 </html>

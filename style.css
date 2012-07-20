@@ -1,19 +1,49 @@
-/*  CSS stylesheet */
+/*- CSS stylesheet */
 
-/*  style.css ~~
- *                                                      ~~ (c) SRW, 19 May 2012
+/*- style.css ~~
+ *                                                      ~~ (c) SRW, 20 Jul 2012
  */
+
+a {
+    border-bottom: 1px dotted;
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+
+    border-bottom: 1px solid;
+    color: blue;
+
+}
 
 body {
 
+    color: black;
     font-family: "Verdana";
+    padding: 1em;
 
 }
 
-pre {
+div {
+
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+}
+
+noscript {
+
+    color: red;
+
+}
+
+.inline-code {
 
     color: navy;
+    font-family: monospace;
+    white-space: pre;
 
 }
 
-/*  vim:set syntax=css: */
+/*- vim:set syntax=css: */
