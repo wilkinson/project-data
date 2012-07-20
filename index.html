@@ -72,7 +72,7 @@
       will be made for each of the fourteen genomes and the results returned
       back to the invoking machine:
     </div>
-    <div class="inline-code">
+    <div class="inline-code" style="color:red">
       fasta = function (x) {
        // This function will be pasted in here as soon as I can figure out
        // which function Jonas wanted to include here. Then, I will probably
@@ -137,12 +137,19 @@
       manuscript, this strategy not only distributes the computational load,
       but it also distributes the bandwidth requirements, too.
     </div>
-    <div class="inline-code">
+    <div style="color:red">
       (placeholder)
     </div>
     <div>
-      <a href="user.html">User Page</a>
-      <a href="volunteer.html">Volunteer Page</a>
+      <button onclick="Q.lib('./fasta-demo.js')">Launch job on QM</button>
+      <button onclick="Q.lib('./daemon.js')">Volunteer for QM</button>
+    </div>
+    <div>
+      Note also that, thanks to the use of the Cross-Origin Resource Sharing
+      standard that is available in modern web browsers, you can construct
+      simple web pages to send to others so that, by simple opening the page,
+      they can volunteer their computers' resources to help run your jobs.
+      As an example, see <a href="./volunteer.html">volunteer.html</a>.
     </div>
     <script src="markup.js"></script>
   </body>
