@@ -32,9 +32,9 @@
       It could also have been imported programmatically by:
     </div>
     <pre>
-s=document.createElement('script');
-s.src='http://qmachine.org/q.js';
-document.body.appendChild(s);
+      s = document.createElement('script');
+      s.src = 'http://qmachine.org/q.js';
+      document.body.appendChild(s);
     </pre>
     <div>
       In this illustration we will distribute the mapReduce decomposition of
@@ -44,23 +44,23 @@ document.body.appendChild(s);
       similar segment to "TCCACAGCATGCGTGACGATGACACG"
     </div>
     <pre>
-uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococcus_pneumoniae_R6_uid57859/NC_003098.fna')
-A = uBac.align('TCCACAGCATGCGTGACGATGACACG')
+      uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococcus_pneumoniae_R6_uid57859/NC_003098.fna');
+      A = uBac.align('TCCACAGCATGCGTGACGATGACACG');
     </pre>
     <div>
       and three different segments of ten units each are found. Here, the
       fourteen genomes, each approximately two million base-pairs in length,
       are also made available as JavaScript function calls at
-      <a href="//q.cgr.googlecode.com/hg/Pneumo"
-        target=_blank>http://q.cgr.googlecode.com/hg/Pneumo</a>.
+      <a href="Pneumo" target=_blank>http://q.cgr.googlecode.com/hg/Pneumo</a>.
       Using the R6 strain as an example, the
-      <a href="//q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js">fasta()</a>
-      call looks like this:
+      <a href="Pneumo/NC_003098.fna.js">fasta() call</a> looks like this:
     </div>
     <pre>
-fasta({name:"NC_003098.fna",
-head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
-body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTTCTA...TGCTATCTATGGTAAAATATCTCTAGT"})
+      fasta({
+          name:"NC_003098.fna",
+          head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
+          body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTTCTA...TGCTATCTATGGTAAAATATCTCTAGT"
+      });
     </pre>
     <div>
       The function <a href="fasta.js">fasta()</a> will now be defined such that
@@ -70,39 +70,10 @@ body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTT
       machine:
     </div>
     <pre>
-	fasta=function(x){
-		if(!!x){fasta.seq=x}; // store sequence in fasta() 
-		// Get the USM library and its dependencies if it is not there already
-		if(typeof(usm)=='undefined'){
-			//fasta.load(['http://localhost:8888/jmat/jmat.js','http://localhost:8888/usm/usm.js'],fasta)
-			fasta.load(['jmat.googlecode.com/git/jmat.js'],['http://usm.github.com/usm.js'])
-			}
-		else{
-			console.log('Indexing genome ...')
-			//var uBac = new usm(x.body); // for small genomes this would be enough
-			var uBac = new usm();
-			uBac.encodeLong(fasta.seq.body,'ACGT');
-			console.log('Aligning new sequence to indexed genome...')
-			fasta.A = uBac.align('TCCACAGCATGCGTGACGATGACACG'); // store result in fasta.A
-			console.log('done !');
-			// Sean, I am guessing in this position you want to have something returning fasta.A to the Q
-		}
-	}
-
-	fasta.load=function(url,callback){ // to load fasta call from remote location
-		if(typeof(url)=='string'){url=[url,'']} // to make sure it's an array of strings, there may be more than one
-		else if(url[url.length-1]!==''){url.push('')} // making sure trailing '' is there, it will be used to close iteration
-		if(url[0].length>0){
-			console.log('loading '+url[0]+' ...');
-			var s=document.createElement('script');
-			s.src=url[0];
-			s.onload=function(){
-				fasta.load(url.slice(1),callback)
-				}
-			document.body.appendChild(s);	
-		}
-		else if(!!callback){callback()}
-	}
+      fasta = function (x) {
+       // This function will be pasted in here real soon ...
+          return;
+      };
     </pre>
     <div>
       For convenience, this function was also loaded in the header of this
@@ -112,7 +83,7 @@ body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTT
       the R6 strain we could do this by
     </div>
     <pre>
-fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js')
+      fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
     </pre>
     <div>
       This will take a few seconds -- just wait for the console to display
