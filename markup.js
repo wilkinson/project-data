@@ -11,8 +11,10 @@
     x = document.getElementsByTagName('pre');
     n = x.length;
     for (i = 0; i < n; i += 1) {
-        temp = '    ' + x[i].innerHTML.trim().split('\n  ').join('\n');
-        x[i].innerHTML = temp;
+        if (x[i].innerHTML[0] === ' ') {
+            temp = '    ' + x[i].innerHTML.trim().split('\n  ').join('\n');
+            x[i].innerHTML = temp;
+        }
     }
     return;
 }());

@@ -80,19 +80,19 @@
     </pre>
     <div>
       For convenience, this function was also loaded in the header of this
-      document, so we are already ready to use it. The fasta function includes
-      a method that will help us load the pneumococcal genomes and trigger the
-      main function, fasta(), to align the test segment to it. For example, for
-      the R6 strain we could do this by
+      document, so we are already ready to use it. The <pre>fasta</pre>
+      function includes a method that will help us load the pneumococcal
+      genomes and trigger the main function, <pre>fasta()</pre>, to align the
+      test segment to it. For example, for the R6 strain we could do this by
     </div>
     <pre>
       fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
     </pre>
     <div>
       This will take a few seconds -- just wait for the console to display
-      "done!". The final result is stored in fasta.A, which contains the
-      position or positions of the longest shared segments and will be
-      something like,
+      "done!". The final result is stored in <pre>fasta.A</pre>, which contains
+      the position or positions of the longest shared segments and will look
+      something like
     </div>
     <pre>
 	fasta.A
@@ -125,8 +125,8 @@
       As detailed in the USM paper, the longest shared segment has length 10
       and 10 different segments of that length were found in R6's genome. Now,
       for the grand finale, let's distribute the 14 pneumococcal genomes to
-      volunteer machines using QM to find out what would be the alignment
-      result for each of them. As detailed in the QMachine manuscript, this
+      volunteer machines using QM to find out what would the alignment result
+      would be for each one of them. As detailed in the QM manuscript, this
       will distribute both the computational resources and the bandwidth:
     </div>
     <pre>
