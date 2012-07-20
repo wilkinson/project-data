@@ -8,6 +8,15 @@
     <meta charset="utf-8"/>
     <title>CGR Demo for QMachine</title>
     <link rel="stylesheet" href="./style.css"/>
+    <script>
+      (function () {
+          'use strict';
+          if (location.search.slice(1) === '') {
+              location.search = 'fasta-demo';
+          }
+          return;
+      }());
+    </script>
     <script src="http://qmachine.org/q.js"></script>
     <script src="./fasta.js"></script>
   </head>
@@ -149,7 +158,8 @@
       standard that is available in modern web browsers, you can construct
       simple web pages to send to others so that, by simple opening the page,
       they can volunteer their computers' resources to help run your jobs.
-      As an example, see <a href="./volunteer.html">volunteer.html</a>.
+      As an example, see
+      <a href="./volunteer.html?fasta-demo">volunteer.html</a>.
     </div>
     <script src="markup.js"></script>
   </body>

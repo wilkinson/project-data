@@ -2,6 +2,7 @@
 
 //- daemon.js ~~
 //                                                      ~~ (c) SRW, 15 May 2012
+//                                                  ~~ last updated 20 Jul 2012
 
 (function (global) {
     'use strict';
@@ -16,21 +17,24 @@
         throw new Error('Method Q is missing.');
     }
 
-    if (typeof global.setTimeout !== 'function') {
+    if (global.location.protocol === 'file:') {
+        console.error('The `volunteer` function uses AJAX => HTTP required.');
         return;
     }
 
  // Declarations
 
-    var Q, revive;
+    var Q, box, revive;
 
  // Definitions
 
     Q = Object.prototype.Q;
 
+    box = global.location.search.slice(1);
+
     revive = function () {
      // This function needs documentation.
-        Q.box = 'fasta-demo';
+        Q.box = box;
         var x = Q.volunteer();
         x.onerror = function (message) {
          // This function needs documentation.
