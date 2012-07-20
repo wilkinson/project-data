@@ -1,37 +1,75 @@
+<!--
+    index.html ~~
+                                                    ~~ (c) JSA and SRW, 2012
+-->
 <html>
-<head>
-	<script src="http://qmachine.org/q.js"></script>
-	<script src="fasta.js"></script>
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	
-</head>
-<body>
-<p>Experimenting with using Q machine for analysis of multiple Prokariote genomes: http://q.cgr.googlecode.com/hg/index.html, see <a href="#">YouTube</a> for a webcast.</p>
-<p>In this experiment we'll look for the longest similar segment in the 14 <i>Streptococcus pneumoniae</i> strains for which the full genome is available at NCBI's FTP site as of April 30, 2012.</p>
-<p>The first step is to make Qmachine's js library available, see in the head of this document:<p>
-<pre>
+  <head>
+    <script src="http://qmachine.org/q.js"></script>
+    <script src="fasta.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <noscript>This page requires JavaScript.</noscript>
+    <h1>CGR Demo for QMachine</h1>
+    <div>
+      Experimenting with using QMachine (QM) for analysis of multiple
+      Prokaryote genomes: http://q.cgr.googlecode.com/hg/index.html, see
+      <a href="#">YouTube</a> for a webcast.
+    </div>
+    <div>
+      In this experiment we will look for the longest similar segment in the
+      fourteen <i>Streptococcus pneumoniae</i> strains for which the full
+      genome is available at NCBI's FTP site as of April 30, 2012.
+    </div>
+    <div>
+      The first step is to make QMachine's JavaScript library available, as
+      shown in the head of this document:
+    </div>
+    <pre>
 &lt;script src="http://qmachine.org/q.js"&gt;&lt;/script&gt;
-</pre>
-<p>It could also have been imported programmatically by:</p>
-<pre>
+    </pre>
+    <div>
+      It could also have been imported programmatically by:
+    </div>
+    <pre>
 s=document.createElement('script');
 s.src='http://qmachine.org/q.js';
 document.body.appendChild(s);
-</pre>
-<p> In this illustration we'll distribute the mapReduce decomposition of sequence alignment described in (Almeida 2012), <a href="http://usm.github.com">http://usm.github.com</a>. In that report, the genome of one of those strains, R6, is probed for the longest similar segment to "TCCACAGCATGCGTGACGATGACACG"<p> 	
-<pre>
+    </pre>
+    <div>
+      In this illustration we will distribute the mapReduce decomposition of
+      sequence alignment described in (Almeida 2012),
+      <a href="http://usm.github.com">http://usm.github.com</a>. In that
+      report, the genome of one of those strains, R6, is probed for the longest
+      similar segment to "TCCACAGCATGCGTGACGATGACACG"
+    </div>
+    <pre>
 uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococcus_pneumoniae_R6_uid57859/NC_003098.fna')
 A = uBac.align('TCCACAGCATGCGTGACGATGACACG')
-</pre>
-<p> and 3 different segments of 10 units each are found. Here, the 14 genomes, each ~2M bp long, are made also available as javascript function calls at <a href="http://q.cgr.googlecode.com/hg/Pneumo" target=_blank>http://q.cgr.googlecode.com/hg/Pneumo</a>. Using the R6 strain as an example, the <a href="http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js">fasta() call</a> looks like this:
-<pre>
+    </pre>
+    <div>
+      and three different segments of ten units each are found. Here, the
+      fourteen genomes, each approximately two million base-pairs in length,
+      are also made available as JavaScript function calls at
+      <a href="//q.cgr.googlecode.com/hg/Pneumo"
+        target=_blank>http://q.cgr.googlecode.com/hg/Pneumo</a>.
+      Using the R6 strain as an example, the
+      <a href="//q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js">fasta()</a>
+      call looks like this:
+    </div>
+    <pre>
 fasta({name:"NC_003098.fna",
 head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
 body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTTCTA...TGCTATCTATGGTAAAATATCTCTAGT"})
-</pre>
-<p>The function <a href="fasta.js">fasta()</a> will now be defined such that it can be distributed by Q to other machines where this sequence matching can be made, in parallel, for each of the 14 genomes, and the result shipped back to Q:<p>
-
-<pre>
+    </pre>
+    <div>
+      The function <a href="fasta.js">fasta()</a> will now be defined such that
+      the computation amy be distributed by QM for execution by other web
+      browsers in parallel where this sequence matching will be made for each
+      of the fourteen genomes and the results returned back to the invoking
+      machine:
+    </div>
+    <pre>
 	fasta=function(x){
 		if(!!x){fasta.seq=x}; // store sequence in fasta() 
 		// Get the USM library and its dependencies if it is not there already
@@ -65,13 +103,24 @@ body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAATTTGCACAAGAAAGACTGACTCGATCCATGTATGATTT
 		}
 		else if(!!callback){callback()}
 	}
-</pre>
-<p>For convenience, this function was also loaded in the header of this document, so we are ready to use it. The fasta function includes a method that will help us load the pneumococcal genomes and trigger the main function, fasta(), to align the test segment to it. For example, for the R6 strain we could do this by</p>
-<pre>
+    </pre>
+    <div>
+      For convenience, this function was also loaded in the header of this
+      document, so we are already ready to use it. The fasta function includes
+      a method that will help us load the pneumococcal genomes and trigger the
+      main function, fasta(), to align the test segment to it. For example, for
+      the R6 strain we could do this by
+    </div>
+    <pre>
 fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js')
-</pre>
-This will take a few seconds, wait for the console to display "done!". The final result is stored in fasta.A, witch contains the position or positions of the longest shared segments and  will be something like,
-<pre>
+    </pre>
+    <div>
+      This will take a few seconds -- just wait for the console to display
+      "done!". The final result is stored in fasta.A, which contains the
+      position or positions of the longest shared segments and will be
+      something like,
+    </div>
+    <pre>
 	fasta.A
 	Object
 	ind: 1
@@ -97,14 +146,21 @@ This will take a few seconds, wait for the console to display "done!". The final
 	length: 4
 	__proto__: Array[0]
 	__proto__: Object
-</pre>
-<p>As detailed in the USM paper, the longest shared segment has length 10 and 10 differnt segments of that length were found in R6's genome. Now for the grand finale lets distribute the 15 pneumococcal genomes to volunteer machines using Q to find out what would be the alignmnet result for each of them. As detailed in the Qmachine manuscript this will distribute both computation and use of bandwidth:</p>
-<pre>
+    </pre>
+    <div>
+      As detailed in the USM paper, the longest shared segment has length 10
+      and 10 different segments of that length were found in R6's genome. Now,
+      for the grand finale, let's distribute the 14 pneumococcal genomes to
+      volunteer machines using QM to find out what would be the alignment
+      result for each of them. As detailed in the QMachine manuscript, this
+      will distribute both the computational resources and the bandwidth:
+    </div>
+    <pre>
 Your turn Sean, pls make it as simple as possible, note we only need to retrieve the fasta.A results from each alignment.
-</pre>
-
-<a href="http://q.cgr.googlecode.com/hg/user.html">User Page</a>
-<a href="http://q.cgr.googlecode.com/hg/volunteer.html">Volunteer Page</a>
-
-</body>
+    </pre>
+    <div>
+      <a href="user.html">User Page</a>
+      <a href="volunteer.html">Volunteer Page</a>
+    </div>
+  </body>
 </html>
