@@ -82,8 +82,11 @@
     </div>
     <div>
       The <a class="inline-code" href="fasta.js">fasta</a> function definition
-      is deceptively simple -- it just "captures" incoming data into a private
-      state variable where QM can find it again later.
+      is deceptively simple -- it's just a reference to QM's built-in
+      <a class="inline-code" href="http://qmachine.org/q.js">capture</a>
+      function, which itself only "captures" incoming data into a private state
+      variable where QM can find it again later. Here are the two definitions,
+      excerpted from their respective source files:
     <!--
       ... which accepts a URI reference as its input argument and which
       returns an "asynchronous variable" ("avar"). Essentially, an avar is a
@@ -106,23 +109,23 @@
     -->
     </div>
     <div class="inline-code">
-      fasta = function (data) {
+      capture = function (data) {
        // This function "captures" incoming data by saving a reference to it
        // in `state.shelf`. It is quite useful when combined with JSONP :-)
           state.shelf.push(data);
           return avar().revive();
       };
+
+      global.fasta = Q.capture;
     </div>
     <div>
-      There are some subtle but important reasons for this design.
+      It may seem incomplete to present the definitions without their original
+      surrounding contexts, but it helps to present the subtleties involved in
+      the problem itself and thereby explain our solution's design.
     </div>
-    <div style="color:red">
-      For convenience, this function was also loaded in the header of this
-      document, so we are already ready to use it. The
-      <span class="inline-code">fasta</span> function includes a method that
-      will help us load the pneumococcal genomes and trigger the main function,
-      <span class="inline-code">fasta()</span>, to align the test segment to
-      it. For example, for the R6 strain we can use this invocation:
+    <div>
+      <span style="color:red">(placeholder segue)</span> For example, for the
+      R6 strain we can use this invocation:
     </div>
     <div class="inline-code">
       Q.fasta('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
