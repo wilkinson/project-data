@@ -17,6 +17,21 @@ a:hover {
 
 }
 
+a img {
+
+ /* See post at http://stackoverflow.com/questions/9060763#10860101. */
+
+    border: 1px solid white;
+    vertical-align: top;
+
+}
+
+a img:hover {
+
+    border: 1px solid blue;
+
+}
+
 body {
 
     color: black;
@@ -29,6 +44,12 @@ div {
 
     margin-top: 1em;
     margin-bottom: 1em;
+
+}
+
+h1 {
+
+    font-size: 150%;
 
 }
 
