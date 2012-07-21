@@ -20,8 +20,7 @@
       }());
     </script>
     <link rel="stylesheet" href="./style.css"/>
-    <script src="http://qmachine.org/q.js"></script>
-    <script src="./fasta.js"></script>
+    <link rel="shortcut icon" href="http://qmachine.org/favicon.ico"/>
   </head>
   <body>
     <noscript>This page requires JavaScript.</noscript>
@@ -80,24 +79,42 @@
       });
     </div>
     <div>
-      The function <a class="inline-code" href="fasta.js">fasta</a> will now
-      be defined such that the computation may be distributed by QM for
+      The <a class="inline-code" href="fasta.js">fasta</a> function definition
+      is deceptively simple in our case -- it just "captures" incoming data
+      into a private state variable where QM can find it again later.
+    <!--
+      ... which accepts a URI reference as its input argument and which
+      returns an "asynchronous variable" ("avar"). Essentially, an avar is a
+      JavaScript object with a "key" property for identification and a "val"
+      property for data storage. As detailed in the QM manuscript, an avar is a
+      high-level container for arbitrary data along with the sequence of
+      transformations yet to be applied to that data.
+    -->
+    <!--
+      As detailed in the QM manuscript, an avar is a logical extension of
+      well-known JavaScript idioms into the domain of high-performance
+      computing, where event-driven, functional approaches are uncommon.
+    -->
+    <!--
+      whose value will contain the results
+      of the alignment  computation may be distributed by QM for
       execution by other web browsers in parallel where this sequence matching
       will be made for each of the fourteen genomes and the results returned
       back to the invoking machine:
+    -->
     </div>
-    <div class="inline-code" style="color:red">
-      fasta = function (x) {
-       // This function will be pasted in here as soon as I can figure out
-       // which function Jonas wanted to include here. Then, I will probably
-       // use an AJAX call inside the "markup.js" script to put the correct
-       // definition here verbatim, just in case we edit or update it later.
-          var y;
-          // ...
-          return y;
+    <div class="inline-code">
+      fasta = function (data) {
+       // This function "captures" incoming data by saving a reference to it
+       // in `state.shelf`. It is quite useful when combined with JSONP :-)
+          state.shelf.push(data);
+          return avar().revive();
       };
     </div>
     <div>
+      There are some subtle but important reasons for this design.
+    </div>
+    <div style="color:red">
       For convenience, this function was also loaded in the header of this
       document, so we are already ready to use it. The
       <span class="inline-code">fasta</span> function includes a method that
@@ -106,7 +123,7 @@
       it. For example, for the R6 strain we can use this invocation:
     </div>
     <div class="inline-code">
-      fasta.load('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
+      Q.fasta('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
     </div>
     <div>
       This will take a few seconds -- just wait for the console to display
@@ -167,6 +184,7 @@
       As an example, see
       <a href="./volunteer.html?fasta-demo">volunteer.html</a>.
     </div>
-    <script src="markup.js"></script>
+    <script src="./markup.js"></script>
+    <script defer src="http://qmachine.org/q.js"></script>
   </body>
 </html>

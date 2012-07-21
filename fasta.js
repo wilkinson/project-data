@@ -2,6 +2,7 @@
 
 //- fasta.js ~~
 //                                                      ~~ (c) SRW, 15 May 2012
+//                                                  ~~ last updated 20 Jul 2012
 
 (function (global) {
     'use strict';
@@ -65,7 +66,7 @@
             libs.onready = function (evt) {
              // This function shows how to load external dependencies in a
              // sequential manner, which is really important when resources
-             // are not necessarily designed for use with Q Machine.
+             // are not necessarily designed for use with QMachine.
                 var temp;
                 if (libs.val.length > 0) {
                     temp = Q.lib(libs.val.shift());
