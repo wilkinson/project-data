@@ -11,6 +11,9 @@
     <script>
       (function () {
           'use strict';
+       // This function immediately redirects the browser to a new URL that
+       // has query parameters explicitly specified in order to demonstrate
+       // their analogy to command-line arguments for the example daemon.
           if (location.search.slice(1) === '') {
               location.search = 'fasta-demo';
           }
@@ -22,7 +25,7 @@
   </head>
   <body>
     <noscript>This page requires JavaScript.</noscript>
-    <h1>CGR Demo for QMachine</h1>
+    <h1>CGR Demonstration for QMachine</h1>
     <div>
       Experimenting with using QMachine (QM) for analysis of multiple
       Prokaryote genomes: http://q.cgr.googlecode.com/hg/index.html, see
@@ -51,14 +54,15 @@
       document.body.appendChild(s);
     </div>
     <div>
-      In this illustration we will distribute the mapReduce decomposition of
+      In this illustration we will distribute the MapReduce decomposition of
       sequence alignment described in (Almeida 2012),
       <a href="http://usm.github.com">http://usm.github.com</a>. In that
       report, the genome of one of those strains, R6, is probed for the longest
       similar segment to "TCCACAGCATGCGTGACGATGACACG",
     </div>
     <div class="inline-code">
-      uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococcus_pneumoniae_R6_uid57859/NC_003098.fna');
+      uBac = new usm('ftp://ftp.ncbi.nlm.nih.gov/genomes/Bacteria/Streptococ\
+        cus_pneumoniae_R6_uid57859/NC_003098.fna');
       A = uBac.align('TCCACAGCATGCGTGACGATGACACG');
     </div>
     <div>
@@ -73,8 +77,10 @@
     <div class="inline-code">
       fasta({
           name:"NC_003098.fna",
-          head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, complete genome",
-          body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAA...TATTAAACTTTTAAATAGTAAAGGAGGAGAAAGGA"
+          head:">gi|15902044|ref|NC_003098.1| Streptococcus pneumoniae R6, c\
+            omplete genome",
+          body:"TTGAAAGAAAAACAATTTTGGAATCGTATATTAGAA...TATTAAACTTTTAAATAGTAA\
+            AGGAGGAGAAAGGA"
       });
     </div>
     <div>
