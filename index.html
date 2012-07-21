@@ -27,21 +27,23 @@
     <h1>Using QMachine to Analyze Multiple Prokaryote Genomes</h1>
     <div>
       In this experiment we will look for the longest similar segment in the
-      fourteen <i>Streptococcus pneumoniae</i> strains for which the full
-      genome is available at
+      fourteen <i>Streptococcus pneumoniae</i> strains for which full genomes
+      are available on
       <a href="ftp://ftp.ncbi.nih.gov/genomes/Bacteria/">NCBI's FTP site</a>
       as of April 30, 2012. A webcast is available on
       <a href="http://www.youtube.com/watch?v=cDtOMd2KRTc">YouTube</a>.
     </div>
     <div>
-      The first step is to make QMachine's JavaScript library available, as
-      shown in the head of this document:
+      The first step is to make QMachine's JavaScript library available. To
+      include it directly within a webpage, as we have done here, add the
+      following snippet to your HTML:
     </div>
     <div class="inline-code">
       &lt;script src="http://qmachine.org/q.js"&gt;&lt;/script&gt;
     </div>
     <div>
-      It could also have been imported programmatically:
+      You can also import it dynamically from within an existing JavaScript
+      program by inserting these lines:
     </div>
     <div class="inline-code">
       s = document.createElement('script');
@@ -80,8 +82,8 @@
     </div>
     <div>
       The <a class="inline-code" href="fasta.js">fasta</a> function definition
-      is deceptively simple in our case -- it just "captures" incoming data
-      into a private state variable where QM can find it again later.
+      is deceptively simple -- it just "captures" incoming data into a private
+      state variable where QM can find it again later.
     <!--
       ... which accepts a URI reference as its input argument and which
       returns an "asynchronous variable" ("avar"). Essentially, an avar is a
@@ -185,6 +187,6 @@
       <a href="./volunteer.html?fasta-demo">volunteer.html</a>.
     </div>
     <script src="./markup.js"></script>
-    <script defer src="http://qmachine.org/q.js"></script>
+    <script src="http://qmachine.org/q.js"></script>
   </body>
 </html>
