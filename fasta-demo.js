@@ -103,7 +103,7 @@
         console.log(JSON.stringify({
             results: results.val,
             timeline: timeline.val
-        });
+        }));
         return evt.exit();
     };
 
