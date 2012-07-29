@@ -1,7 +1,7 @@
 //- JavaScript source code
 
 //- fasta-demo.js ~~
-//                                                      ~~ (c) SRW, 19 Jul 2012
+//                                                      ~~ (c) SRW, 29 Jul 2012
 
 (function () {
     'use strict';
@@ -18,7 +18,7 @@
 
  // Declarations
 
-    var Q, avar, data, libs, ply, results, when;
+    var Q, avar, data, libs, ply, results, timeline, when;
 
  // Definitions
 
@@ -49,23 +49,23 @@
 
     results = avar({val: []});
 
+    timeline = avar({val: []});
+
     when = Q.when;
 
  // Demonstrations
 
-    when(data, libs, results).areready = function (evt) {
+    when(data, libs, results, timeline).areready = function (evt) {
      // This function starts the clock ...
         Q.box = 'fasta-demo';
-        var remaining, timeline;
-        remaining = data.length;
-        timeline = {
-            start:  [],
-            end:    []
-        };
+        var remaining = data.length;
         ply(data).by(function (key, val) {
          // This function needs documentation.
             console.log('Launching ' + val + ' ...');
-            timeline.start[key] = new Date();
+            timeline.val[key] = {
+                start:  new Date(),
+                end:    undefined
+            };
             var job = Q.fasta(val);
             job.onerror = function (message) {
              // This function needs documentation.
@@ -73,14 +73,13 @@
             };
             job.onready = function (job_evt) {
              // This function needs documentation.
-                timeline.end[key] = new Date();
+                timeline.val[key].end = new Date();
                 results.val[key] = job.val;
                 console.log('Success:', job.val);
                 console.log('Elapsed time in seconds:',
-                    (timeline.end[key] - timeline.start[key]) / 1000);
+                    (timeline.val[key].end - timeline.val[key].start) / 1000);
                 remaining -= 1;
                 if (remaining === 0) {
-                    console.log('Timeline:', timeline);
                     job_evt.exit();
                     return evt.exit();
                 }
@@ -91,15 +90,20 @@
         return;
     };
 
-    results.onerror = function (message) {
+    results.onerror = timeline.onerror = function (message) {
      // This function needs documentation.
         console.error('Error:', message);
         return;
     };
 
-    results.onready = function (evt) {
+    when(results, timeline).areready = function (evt) {
      // This function needs documentation.
-        console.log(results.val);
+        console.log('Results:', results.val);
+        console.log('Timeline:', timeline.val);
+        console.log(JSON.stringify({
+            results: results.val,
+            timeline: timeline.val
+        });
         return evt.exit();
     };
 
