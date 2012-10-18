@@ -2,7 +2,7 @@
 
 //- fasta.js ~~
 //                                                      ~~ (c) SRW, 15 May 2012
-//                                                  ~~ last updated 20 Jul 2012
+//                                                  ~~ last updated 18 Oct 2012
 
 (function (global) {
     'use strict';
@@ -13,23 +13,35 @@
 
  // Prerequisites
 
-    if (Object.prototype.hasOwnProperty('Q') === false) {
-        throw new Error('Method Q is missing.');
+    if (global.hasOwnProperty('QM') === false) {
+        throw new Error('QMachine is not loaded.');
     }
 
  // Declarations
 
-    var Q, avar;
+    var QM, avar;
 
  // Definitions
 
-    Q = Object.prototype.Q;
+    QM = global.QM;
 
-    avar = Q.avar;
+    avar = QM.avar;
 
  // Out-of-scope definitions
 
-    global.fasta = Q.capture;
+ /*
+    global.fasta = function (obj) {
+     // This function runs when data are loaded using JSONP. As such, it can
+     // be a really nasty problem to figure out where the data are coming from
+     // so that I can deliver them back to QMachine for further computation.
+     // I had solved this previously by using `Q.capture` and `Q.retrieve`
+     // commands, but that's a pretty convoluted way to do things ...
+        // ...
+        return;
+    };
+ */
+
+    global.fasta = QM.capture;
 
     Q.fasta = function (url) {
      // This function needs documentation.

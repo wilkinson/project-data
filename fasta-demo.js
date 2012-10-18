@@ -1,9 +1,9 @@
 //- JavaScript source code
 
 //- fasta-demo.js ~~
-//                                                      ~~ (c) SRW, 29 Jul 2012
+//                                                      ~~ (c) SRW, 18 Oct 2012
 
-(function () {
+(function (global) {
     'use strict';
 
  // Pragmas
@@ -12,19 +12,19 @@
 
  // Prerequisites
 
-    if (Object.prototype.hasOwnProperty('Q') === false) {
-        throw new Error('Method Q is missing.');
+    if (global.hasOwnProperty('QM') === false) {
+        throw new Error('QMachine is not loaded.');
     }
 
  // Declarations
 
-    var Q, avar, data, libs, ply, results, timeline, when;
+    var QM, avar, data, libs, ply, results, timeline, when;
 
  // Definitions
 
-    Q = Object.prototype.Q;
+    QM = global.QM;
 
-    avar = Q.avar;
+    avar = QM.avar;
 
     data = [
         'http://q.cgr.googlecode.com/hg/Pneumo/NC_003028.fna.js',
@@ -43,21 +43,21 @@
         'http://q.cgr.googlecode.com/hg/Pneumo/NC_014498.fna.js'
     ];
 
-    libs = Q.lib('http://q.cgr.googlecode.com/hg/fasta.js');
+    libs = QM.load_script('http://q.cgr.googlecode.com/hg/fasta.js');
 
-    ply = Q.ply;
+    ply = QM.ply;
 
     results = avar({val: []});
 
     timeline = avar({val: []});
 
-    when = Q.when;
+    when = QM.when;
 
  // Demonstrations
 
     when(data, libs, results, timeline).areready = function (evt) {
      // This function starts the clock ...
-        Q.box = 'fasta-demo';
+        QM.box = 'fasta-demo';
         var remaining = data.length;
         ply(data).by(function (key, val) {
          // This function needs documentation.
@@ -66,7 +66,7 @@
                 start:  new Date(),
                 end:    undefined
             };
-            var job = Q.fasta(val);
+            var job = QM.fasta(val);
             job.onerror = function (message) {
              // This function needs documentation.
                 return evt.fail(message + '(' + val + ')');
@@ -111,6 +111,15 @@
 
     return;
 
-}());
+}(Function.prototype.call.call(function (that) {
+    'use strict';
+ // See the bottom of "quanah.js" for documentation.
+    /*jslint indent: 4, maxlen: 80 */
+    /*global global: true */
+    if (this === null) {
+        return (typeof global === 'object') ? global : that;
+    }
+    return (typeof this.global === 'object') ? this.global : this;
+}, null, this)));
 
 //- vim:set syntax=javascript:
