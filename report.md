@@ -1,4 +1,4 @@
-Using Q Machine to Analyze Multiple Prokaryote Genomes
+Using QMachine to Analyze Multiple Prokaryote Genomes
 ======================================================
 
 In this experiment, we'll look for the longest similar segment in the fourteen
@@ -43,7 +43,7 @@ looks, when indented and abbreviated for readability, as follows:
 
 The [fasta](http://q.cgr.googlecode.com/hg/fasta.js) function will now be
 defined so that it can be distributed to remote machines and its results can be
-returned by Q to the original machine. Because Q provides opportunistic
+returned by QM to the original machine. Because QM provides opportunistic
 parallelization for programs that utilize it, the sequence matching for all
 fourteen genomes will execute simultaneously when enough remote machines are
 available.

@@ -116,7 +116,7 @@
           return avar().revive();
       };
 
-      global.fasta = Q.capture;
+      global.fasta = QM.capture;
     </div>
     <div>
       It may seem incomplete to present the definitions without their original
@@ -130,7 +130,7 @@
       For example, for the R6 strain we can use this invocation:
     </div>
     <div class="inline-code">
-      Q.fasta('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
+      QM.fasta('http://q.cgr.googlecode.com/hg/Pneumo/NC_003098.fna.js');
     </div>
     <div>
       This will take a few seconds -- just wait for the console to display
@@ -179,8 +179,8 @@
       (placeholder)
     </div>
     <div>
-      <button onclick="Q.lib('./fasta-demo.js')">Launch job on QM</button>
-      <button onclick="Q.lib('./daemon.js')">Volunteer for QM</button>
+      <button onclick="QM.lib('./fasta-demo.js')">Launch job on QM</button>
+      <button onclick="QM.lib('./daemon.js')">Volunteer for QM</button>
     </div>
     <div>
       Note also that, thanks to the use of the
