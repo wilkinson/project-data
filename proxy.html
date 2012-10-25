@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--
+    proxy.html ~~
+                                                        ~~ (c) SRW, 25 Oct 2012
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Sean Wilkinson"/>
+    <title>Proxy</title>
+  </head>
+  <body>
+    <noscript>This page requires JavaScript.</noscript>
+    <script type="text/javascript"><!--
+        (function () {
+            'use strict';
+
+         // Pragmas
+
+            /*jslint browser: true, indent: 4, maxlen: 80 */
+
+         // Prerequisites
+
+            if (window.hasOwnProperty('postMessage') === false) {
+                throw new Error('Cross-document messaging is not available.');
+            }
+
+         // Out-of-scope definitions
+
+            window.onmessage = function (dom_evt) {
+             // This function needs documentation.
+                var request, task, sender;
+                request = new XMLHttpRequest();
+                sender = dom_evt.source;
+                task = JSON.parse(dom_evt.data);
+                request.onreadystatechange = function () {
+                 // This function needs documentation.
+                    if (request.readyState === 4) {
+                        if (request.status === 200) {
+                            task.y = request.responseText;
+                        } else {
+                            task.epitaph = request.status;
+                            task.y = null;
+                        }
+                        window.postMessage(JSON.stringify(task), sender);
+                    }
+                    return;
+                };
+                request.open('GET', task.x, true);
+                request.send(null);
+                return;
+            };
+
+         // That's all, folks!
+
+            return;
+
+        }());
+     // -->
+    </script>
+  </body>
+</html>
